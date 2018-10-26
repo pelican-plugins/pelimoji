@@ -1,5 +1,5 @@
-### Pelimoji
-## Simple emoji replacement for Pelican
+# Pelimoji
+### Simple emoji replacement for Pelican
 
 Installation is simple! Drop this into your plugins directory and add it to be loaded. Copy `pelimoji.css` to a static path in your theme and ensure it'll be loaded in, whether using the `assets` plugin to compile it or not.
 

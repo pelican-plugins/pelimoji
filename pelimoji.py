@@ -7,7 +7,7 @@ def init(pelican_object):
     emojipath = pelican_object.settings.get('PELIMOJI_PATH', ())
     searchpath = "%s/%s/*.png" % (contentroot,emojipath)
     installed_emoji = glob.glob(searchpath)
-    # Great! Now let's create a search-list 
+    # Great! Now let's create a search-list
     emojis = [ os.path.basename(x)[:-4] for x in installed_emoji ]
 
 def replace(path, context):

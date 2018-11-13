@@ -18,7 +18,5 @@ i.cemoji span{
 {% for image in images %}
 .{{ image.label }}{{ image.pseudo }} {
     background-position: {{ image.x / image.width }}em {{ image.y / image.height }}em;
-    /* {{ image.width }} {{ image.height }} */
-    /* {{ image.x }} {{ image.y }} */
 }
 {% endfor %}

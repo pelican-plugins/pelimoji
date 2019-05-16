@@ -23,20 +23,18 @@ def init(pelican_object):
     # Great! Now let's create a search-list
     emojis = [ os.path.basename(x.decode('utf-8'))[:-4] for x in installed_emoji ]
 
-def replace(path, context):
-    # Now, we'll open any written files to search for the matching search-strings
-    with open(path, 'r') as f:
-        s = f.read()
-        for emoji in emojis:
-            search = ':%s%s:' % (prefix,emoji)
-            s = s.replace(search, emoji_html(emoji))
-    with open(path, 'w') as f:
-        f.write(s)
-
 def emoji_html(emoji):
     html = '<i class="cemoji cemoji-%s" title=":%s:"><span>:%s:</span></i>' % (emoji,emoji,emoji)
     return html
 
+def replace(content):
+    try:
+        for emoji in emojis:
+            search = ':%s%s:' % (prefix,emoji)
+            content._content = content._content.replace(search, emoji_html(emoji))
+    except:
+        print("Could not edit content of %s" % (content,))
+
 def register():
     pelican.signals.initialized.connect(init)
-    pelican.signals.content_written.connect(replace)
+    pelican.signals.content_object_init.connect(replace)

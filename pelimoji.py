@@ -18,9 +18,8 @@ def init(pelican_object):
         '--namespace',"cemoji", \
         '--sprite-namespace',"", \
         '--css-template=plugins/pelimoji/css.j2', \
-        '--recursive', ]\
-        #'--padding=0.5',] \
-        #'--png8']
+        '--recursive', 
+        '--cachebuster' ]
     subprocess.call(glue_exec)
     # Now let's create a search-list of emoji names
     emojis = [ os.path.basename(x.decode('utf-8'))[:-4] for x in installed_emoji ]

@@ -44,7 +44,7 @@ def init(pelican_object):
     # compile pattern to global for speed, given how massive it'll (potentially) be
     pelimoji_prog = re.compile(pattern)
     # And the pattern to replace it with!
-    pelimoji_replace = '<i class="cemoji cemoji-\g<emoji>" title=":\g<emoji>:"><span>:\g<emoji>:</span></i>'
+    pelimoji_replace = r'<i class="cemoji cemoji-\g<emoji>" title=":\g<emoji>:"><span>:\g<emoji>:</span></i>'
 
 
 def replace(content):
@@ -52,7 +52,7 @@ def replace(content):
     if fileext in ["md", "html", "rst", "txt"]:
         try:
             content._content = pelimoji_prog.sub(pelimoji_replace, content._content)
-        except:
+        except TypeError:
             print(
                 "Something went wrong editing {} for pelimoji, sorry".format(
                     str(content)

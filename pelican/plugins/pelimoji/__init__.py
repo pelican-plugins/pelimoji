@@ -1,1 +1,1 @@
-from .pelimoji import *
+from .pelimoji import *  # NOQA

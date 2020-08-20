@@ -35,7 +35,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
-pelican = "^4.2"
+pelican = "^4.5"
 glue = { git = "https://github.com/justinmayer/glue.git" }
 markdown = {version = "^3.2.2",optional = true}
 

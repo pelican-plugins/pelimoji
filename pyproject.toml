@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pelimoji"
-version = "0.0.0"
+version = "1.0.0"
 description = "Pelican plugin for simple emoji replacement"
 authors = ["Kay Ohtie <kay@coyotesin.space>"]
 license = "AGPL-3.0"

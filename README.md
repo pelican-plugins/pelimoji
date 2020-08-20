@@ -1,5 +1,7 @@
 # Pelimoji
 
+[![Build Status](https://img.shields.io/github/workflow/status/pelican-plugins/pelimoji/build)](https://github.com/pelican-plugins/pelimoji/actions) [![PyPI Version](https://img.shields.io/pypi/v/pelimoji)](https://pypi.org/project/pelimoji/)
+
 Pelimoji is a [Pelican][] plugin that adds support for custom emoji to your site.
 
 Installation
@@ -7,7 +9,7 @@ Installation
 
 This plugin can be installed via:
 
-    pip install pelimoji
+    python -m pip install pelimoji
 
 Installation of the [Glue][] dependency may require additional development header packages be installed to your system, or you may install [Glue][] from your OS's package manager if version `0.13` or newer is available.
 

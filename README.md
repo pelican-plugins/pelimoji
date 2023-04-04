@@ -1,8 +1,8 @@
 # Pelimoji
 
-[![Build Status](https://img.shields.io/github/workflow/status/pelican-plugins/pelimoji/build)](https://github.com/pelican-plugins/pelimoji/actions) [![PyPI Version](https://img.shields.io/pypi/v/pelimoji)](https://pypi.org/project/pelimoji/)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/pelican-plugins/pelimoji/main.yml?branch=main)](https://github.com/pelican-plugins/pelimoji/actions)
 
-Pelimoji is a [Pelican][] plugin that adds support for custom emoji to your site.
+Pelimoji is a [Pelican][] plugin that adds support for custom emoji to your site. It is not yet published to PyPI because this plugin depends on the [Glue][] sprites library, which is unmaintained and thus prevents a proper release of this plugin to PyPI.
 
 Installation
 ------------

@@ -13,9 +13,9 @@ def init(pelican_object):
     global pelimoji_prog, pelimoji_replace
     # Let's build a list of installed emoji
     content_root = pelican_object.settings.get("PATH", ())
-    search_path = "%s/emoji" % (content_root,)
+    search_path = "{}/emoji".format(content_root)
     output_path = "emoji_map"
-    save_path = "%s/%s" % (content_root, output_path)
+    save_path = "{}/{}".format(content_root, output_path)
     pelican_object.settings["STATIC_PATHS"].append(output_path)
     prefix = pelican_object.settings.get("PELIMOJI_PREFIX", "")
     if prefix != "":

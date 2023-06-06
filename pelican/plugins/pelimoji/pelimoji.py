@@ -1,50 +1,101 @@
-from os.path import abspath, basename, dirname
+import logging
+from os.path import abspath, dirname
 from pathlib import Path
 import re
-import subprocess
 
-import pelican
+from PIL import Image, ImageColor
+from jinja2 import Template
+
+from pelican import signals
 
 PLUGIN_ROOT = Path(dirname(dirname(abspath(__file__))))
+logger = logging.getLogger(__name__)
 
 
 def init(pelican_object):
     # Global emojis, prefix
     global pelimoji_prog, pelimoji_replace
     # Let's build a list of installed emoji
-    content_root = pelican_object.settings.get("PATH", ())
-    search_path = "%s/emoji" % (content_root,)
-    output_path = "emoji_map"
-    save_path = "%s/%s" % (content_root, output_path)
-    pelican_object.settings["STATIC_PATHS"].append(output_path)
+    content_root = Path(pelican_object.settings.get("PATH", ()))
+    search_path = Path(
+        content_root, pelican_object.settings.get("PELIMOJI_SOURCE", "emoji")
+    )
+    output_path = Path(content_root, "emoji_map")
+    pelican_object.settings["STATIC_PATHS"].append(str(output_path))
     prefix = pelican_object.settings.get("PELIMOJI_PREFIX", "")
+    output_map_path = "/emoji_map/emoji.png"
     if prefix != "":
         prefix = prefix + "-"
-    installed_emoji = subprocess.check_output(
-        ["find", search_path, "-iname", "*.png"]
-    ).split(b"\n")
-    # Now using 'glue' to make the sprite sheet itself
-    glue_exec = [
-        "glue",
-        search_path,
-        save_path,
-        "--namespace",
-        "cemoji",
-        "--sprite-namespace",
-        "",
-        f"--css-template={PLUGIN_ROOT}/pelimoji/css.j2",
-        "--recursive",
-        "--cachebuster",
-    ]
-    subprocess.call(glue_exec)
+
+    emoji_images = list(search_path.rglob("*.png"))
+    emoji_images.extend(list(search_path.rglob("*.gif")))
+    emoji_images.extend(list(search_path.rglob("*.webp")))
+    images = list(map(lambda x: Image.open(x), emoji_images))
+    logger.debug(f"Found: {list(map(lambda x: str(x), emoji_images))}")
+    width = max(image.size[0] for image in images)
+    height = max(image.size[1] for image in images)
+    cell_size = (width, height)
+
+    count = len(images)
+    grid_size = (cell_size[0] * count, cell_size[1])
+
+    output_map: Image = Image.new("RGBA", grid_size, ImageColor.getrgb("#00000000"))
+    context_images = []
+    context = {
+        "images": context_images,
+        "prefix": "cemoji-",
+        "cell": {
+            "width": cell_size[0],
+            "height": cell_size[1],
+            "count": count,
+        },
+        "grid": {
+            "vertical": False,
+            "width": grid_size[0],
+            "height": grid_size[1],
+        },
+        "output": output_map_path,
+    }
+    image: Image
+    for position, image in enumerate(images):
+        x_offset = (cell_size[0] - image.size[0]) // 2
+        y_offset = (cell_size[1] - image.size[1]) // 2
+        x, y = position * cell_size[0], 0
+        output_map.alpha_composite(image.convert("RGBA"), (x + x_offset, y + y_offset))
+        imgpath = Path(image.filename)
+        context_images.append(
+            {
+                "index": position + 1,
+                "index0": position,
+                "filename": imgpath.name,
+                "stem": imgpath.stem,
+                "position": {
+                    "x": x,
+                    "y": y,
+                },
+                "offset": {
+                    "x": x_offset,
+                    "y": y_offset,
+                },
+                "width": image.size[0],
+                "height": image.size[1],
+            }
+        )
+    output_map.save(output_path / "emoji.png")
+    with open(Path(__file__).parent / "css.j2") as f:
+        template = Template(f.read())
+    with open(output_path / "emoji.css", "w") as f:
+        f.write(template.render(context))
+
+    # return output
     # Now let's create a search-list of emoji names
-    emojis = [basename(x.decode("utf-8"))[:-4] for x in installed_emoji]
+    emojis = map(lambda x: x.stem, emoji_images)
     # And a regex pattern to find to avoid iterating
     pattern = ":" + prefix + "(?P<emoji>(" + ")|(".join(emojis) + ")):"
     # compile pattern to global for speed, given how massive it'll (potentially) be
     pelimoji_prog = re.compile(pattern)
     # And the pattern to replace it with!
-    pelimoji_replace = r'<i class="cemoji cemoji-\g<emoji>" title=":\g<emoji>:"><span>:\g<emoji>:</span></i>'
+    pelimoji_replace = r'<i class="cemoji cemoji-\g<emoji>" aria-label="\g<emoji>" title="\g<emoji>"></i>'
 
 
 def replace(content):
@@ -61,5 +112,5 @@ def replace(content):
 
 
 def register():
-    pelican.signals.initialized.connect(init)
-    pelican.signals.content_object_init.connect(replace)
+    signals.initialized.connect(init)
+    signals.content_object_init.connect(replace)

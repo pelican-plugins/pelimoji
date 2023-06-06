@@ -1,22 +1,14 @@
 i.cemoji {
-    background-image: url('/emoji_map/{{ sprite_path }}');
-    background-size: {{ width / images[0].width }}em;
-    /*vertical-align: top;*/
+    background-image: url('{{ output }}');
+    background-size: {{ grid.width / images[0].width }}em;
     width: 1em;
     height: 1em;
     display: inline-block;
-    font-family: 'object-fit: contain, inherit;' ! important;
-    -o-object-fit: contain ! important;
     object-fit: contain ! important;
     vertical-align: middle ! important;
-	margin: -.2ex .15em .2ex ! important;
-}
-i.cemoji span{
-	font-size: 0.1px;
-    color: rgba(0, 0, 0, 0);
 }
 {% for image in images %}
-.{{ image.label }}{{ image.pseudo }} {
-    background-position: {{ image.x / image.width }}em {{ image.y / image.height }}em;
+.{{ prefix }}{{ image.stem }} {
+    background-position: -{{ image.position['x'] / image.width }}em {{ image.position['y'] / image.height }}em;
 }
 {% endfor %}

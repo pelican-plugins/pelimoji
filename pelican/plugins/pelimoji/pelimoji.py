@@ -43,7 +43,7 @@ def init(pelican_object):
     context_images = []
     context = {
         "images": context_images,
-        "prefix": "cemoji-",
+        "prefix": prefix,
         "cell": {
             "width": cell_size[0],
             "height": cell_size[1],

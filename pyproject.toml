@@ -40,9 +40,7 @@ flake8 = "^3.8"
 flake8-black = "^0.1.0"
 invoke = "^2.1"
 isort = "^5.4"
-livereload = "^2.6"
-markdown = "^3.2.2"
-Werkzeug = "^1.0"
+markdown = "^3.4"
 
 [tool.poetry.extras]
 markdown = ["markdown"]

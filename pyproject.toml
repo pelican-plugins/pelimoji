@@ -35,12 +35,10 @@ Pillow = ">=9.5"
 markdown = {version = ">=3.2", optional = true}
 
 [tool.poetry.group.dev.dependencies]
-black = {version = "^19.10b0",allow-prereleases = true}
-flake8 = "^3.8"
-flake8-black = "^0.1.0"
+black = "^23"
 invoke = "^2.1"
-isort = "^5.4"
 markdown = "^3.4"
+ruff = ">=0.0.271"
 
 [tool.poetry.extras]
 markdown = ["markdown"]

@@ -44,25 +44,21 @@ def black(c, check=False, diff=False):
 
 
 @task
-def isort(c, check=False, diff=False):
-    check_flag, diff_flag = "", ""
-    if check:
-        check_flag = "-c"
+def ruff(c, fix=False, diff=False):
+    """Run Ruff to ensure code meets project standards."""
+    diff_flag, fix_flag = "", ""
+    if fix:
+        fix_flag = "--fix"
     if diff:
         diff_flag = "--diff"
-    c.run(f"{VENV}/bin/isort {check_flag} {diff_flag} .")
+    c.run(f"{CMD_PREFIX}ruff check {diff_flag} {fix_flag} .")
 
 
 @task
-def flake8(c):
-    c.run(f"{VENV}/bin/flake8 {PKG_PATH} tasks.py")
-
-
-@task
-def lint(c):
-    isort(c, check=True)
-    black(c, check=True)
-    flake8(c)
+def lint(c, fix=False, diff=False):
+    """Check code style via linting tools."""
+    ruff(c, fix=fix, diff=diff)
+    black(c, check=(not fix), diff=diff)
 
 
 @task

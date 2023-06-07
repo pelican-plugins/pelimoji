@@ -1,38 +1,46 @@
+from inspect import cleandoc
+import logging
 import os
 from pathlib import Path
 from shutil import which
 
 from invoke import task
 
+logger = logging.getLogger(__name__)
+
 PKG_NAME = "pelimoji"
 PKG_PATH = Path(f"pelican/plugins/{PKG_NAME}")
+
 ACTIVE_VENV = os.environ.get("VIRTUAL_ENV", None)
 VENV_HOME = Path(os.environ.get("WORKON_HOME", "~/.local/share/virtualenvs"))
-VENV_PATH = Path(ACTIVE_VENV) if ACTIVE_VENV else (VENV_HOME / PKG_NAME)
+VENV_PATH = Path(ACTIVE_VENV) if ACTIVE_VENV else (VENV_HOME.expanduser() / PKG_NAME)
 VENV = str(VENV_PATH.expanduser())
+BIN_DIR = "bin" if os.name != "nt" else "Scripts"
+VENV_BIN = Path(VENV) / Path(BIN_DIR)
+TOOLS = ("poetry", "pre-commit")
 
-TOOLS = ["poetry", "pre-commit"]
-POETRY = which("poetry") if which("poetry") else (VENV / Path("bin") / "poetry")
-PRECOMMIT = (
-    which("pre-commit") if which("pre-commit") else (VENV / Path("bin") / "pre-commit")
-)
+POETRY = which("poetry") if which("poetry") else (VENV_BIN / "poetry")
+CMD_PREFIX = f"{VENV_BIN}/" if ACTIVE_VENV else f"{POETRY} run "
+PRECOMMIT = which("pre-commit") if which("pre-commit") else f"{CMD_PREFIX}pre-commit"
+PTY = os.name != "nt"
 
 
 @task
-def tests(c):
-    """Run the test suite"""
-    c.run(f"{VENV}/bin/pytest", pty=True)
+def tests(c, deprecations=False):
+    """Run the test suite, optionally with `--deprecations`."""
+    deprecations_flag = "" if deprecations else "-W ignore::DeprecationWarning"
+    c.run(f"{CMD_PREFIX}pytest {deprecations_flag}", pty=PTY)
 
 
 @task
 def black(c, check=False, diff=False):
-    """Run Black auto-formatter, optionally with --check or --diff"""
+    """Run Black auto-formatter, optionally with `--check` or `--diff`."""
     check_flag, diff_flag = "", ""
     if check:
         check_flag = "--check"
     if diff:
         diff_flag = "--diff"
-    c.run(f"{VENV}/bin/black {check_flag} {diff_flag} {PKG_PATH} tasks.py")
+    c.run(f"{CMD_PREFIX}black {check_flag} {diff_flag} {PKG_PATH} tasks.py")
 
 
 @task
@@ -59,21 +67,35 @@ def lint(c):
 
 @task
 def tools(c):
-    """Install tools in the virtual environment if not already on PATH"""
+    """Install development tools in the virtual environment if not already on PATH."""
     for tool in TOOLS:
         if not which(tool):
-            c.run(f"{VENV}/bin/pip install {tool}")
+            c.run(f"{CMD_PREFIX}pip install {tool}")
 
 
 @task
 def precommit(c):
-    """Install pre-commit hooks to .git/hooks/pre-commit"""
+    """Install pre-commit hooks to .git/hooks/pre-commit."""
     c.run(f"{PRECOMMIT} install")
 
 
 @task
 def setup(c):
-    c.run(f"{VENV}/bin/pip install -U pip")
-    tools(c)
-    c.run(f"{POETRY} install")
-    precommit(c)
+    """Set up the development environment."""
+    if which("poetry") or ACTIVE_VENV:
+        tools(c)
+        c.run(f"{CMD_PREFIX}python -m pip install --upgrade pip")
+        c.run(f"{POETRY} install")
+        precommit(c)
+        logger.info("\nDevelopment environment should now be set up and ready!\n")
+    else:
+        error_message = """
+            Poetry is not installed, and there is no active virtual environment available.
+            You can either manually create and activate a virtual environment, or you can
+            install Poetry via:
+
+            curl -sSL https://install.python-poetry.org | python3 -
+
+            Once you have taken one of the above two steps, run `invoke setup` again.
+            """  # noqa: E501
+        raise SystemExit(cleandoc(error_message))

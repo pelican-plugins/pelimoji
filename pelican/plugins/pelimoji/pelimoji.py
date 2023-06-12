@@ -1,10 +1,10 @@
 import logging
+import re
 from os.path import abspath, dirname
 from pathlib import Path
-import re
 
-from PIL import Image, ImageColor
 from jinja2 import Template
+from PIL import Image, ImageColor
 
 from pelican import signals
 
@@ -24,7 +24,7 @@ def init(pelican_object):
     pelican_object.settings["STATIC_PATHS"].append(str(output_path))
     prefix = pelican_object.settings.get("PELIMOJI_PREFIX", "")
     output_map_path = "/emoji_map/emoji.png"
-    if prefix != "":
+    if prefix:
         prefix = prefix + "-"
 
     emoji_images = list(search_path.rglob("*.png"))
@@ -95,7 +95,7 @@ def init(pelican_object):
     # compile pattern to global for speed, given how massive it'll (potentially) be
     pelimoji_prog = re.compile(pattern)
     # And the pattern to replace it with!
-    pelimoji_replace = r'<i class="cemoji cemoji-\g<emoji>" aria-label="\g<emoji>" title="\g<emoji>"></i>'
+    pelimoji_replace = r'<i class="cemoji cemoji-\g<emoji>" aria-label="\g<emoji>" title="\g<emoji>"></i>'  # NOQA: E501
 
 
 def replace(content):
@@ -104,7 +104,7 @@ def replace(content):
         try:
             content._content = pelimoji_prog.sub(pelimoji_replace, content._content)
         except TypeError:
-            print(
+            logger.warning(
                 "Something went wrong editing {} for pelimoji, sorry".format(
                     str(content)
                 )

@@ -22,6 +22,12 @@ When compiling your site, the following directory will be created and automatica
 
 You may optionally also specify a `PELIMOJI_PREFIX` to require if you might have multiple sets of colon-tags that'd overlap. Whereas I might normally use `:thumbs-up:`, I could then specify `PELIMOJI_PREFIX = "emoji"`, and my tag would instead be `:emoji-thumbs-up:`.
 
+By default this plugin operates on source content files with the following file extensions: `["md", "html", "rst"]`, corresponding to Markdown, HTML, and reStructuredText. If you, say, want this plugin to also process files ending in `.txt`, you should add the following to your settings file:
+
+```python
+PELIMOJI_FILE_EXTENSIONS = ["md", "html", "rst", "txt"]
+```
+
 Contributing
 ------------
 

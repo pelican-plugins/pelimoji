@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 def init(pelican_object):
-    # Global emojis, prefix
-    global pelimoji_prog, pelimoji_replace
+    # Global variables for file extensions, emojis, prefix
+    global pelimoji_ext, pelimoji_prog, pelimoji_replace
     # Let's build a list of installed emoji
     content_root = Path(pelican_object.settings.get("PATH", ()))
     search_path = Path(
@@ -22,6 +22,9 @@ def init(pelican_object):
     )
     output_path = Path(content_root, "emoji_map")
     pelican_object.settings["STATIC_PATHS"].append(str(output_path))
+    pelimoji_ext = pelican_object.settings.get(
+        "PELIMOJI_FILE_EXTENSIONS", ["md", "html", "rst"]
+    )
     prefix = pelican_object.settings.get("PELIMOJI_PREFIX", "")
     output_map_path = "/emoji_map/emoji.png"
     if prefix:
@@ -100,7 +103,7 @@ def init(pelican_object):
 
 def replace(content):
     fileext = str(content).split(".")[-1].lower()
-    if fileext in ["md", "html", "rst", "txt"]:
+    if fileext in pelimoji_ext:
         try:
             content._content = pelimoji_prog.sub(pelimoji_replace, content._content)
         except TypeError:

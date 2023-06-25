@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pelimoji"
-version = "1.0.0"
-description = "Pelican plugin for simple emoji replacement"
+version = "0.0.0"
+description = "Pelican plugin to add custom emoji to your site"
 authors = ["Kay Ohtie <kay@coyotesin.space>"]
 license = "AGPL-3.0"
 readme = "README.md"
@@ -38,7 +38,7 @@ markdown = {version = ">=3.2", optional = true}
 black = "^23"
 invoke = "^2.1"
 markdown = "^3.4"
-ruff = ">=0.0.271"
+ruff = ">=0.0.275"
 
 [tool.poetry.extras]
 markdown = ["markdown"]
@@ -46,7 +46,7 @@ markdown = ["markdown"]
 [tool.autopub]
 project-name = "Pelimoji"
 git-username = "botpub"
-git-email = "botpub@autopub.rocks"
+git-email = "52496925+botpub@users.noreply.github.com"
 
 [tool.ruff]
 select = [

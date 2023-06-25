@@ -1,6 +1,8 @@
 # Pelimoji
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/pelican-plugins/pelimoji/main.yml?branch=main)](https://github.com/pelican-plugins/pelimoji/actions)
+[![PyPI Version](https://img.shields.io/pypi/v/pelican-markdown-include)](https://pypi.org/project/pelican-markdown-include/)
+![License](https://img.shields.io/pypi/l/pelican-markdown-include?color=blue)
 
 Pelimoji is a [Pelican][] plugin that adds support for custom emoji to your site.
 

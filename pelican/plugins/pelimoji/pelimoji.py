@@ -23,7 +23,7 @@ def init(pelican_object):
     output_path = Path(content_root, "emoji_map")
     if not output_path.exists():
         try:
-            output_path.mkdir(parents=True)
+            output_path.mkdir(parents=True, exist_ok=True)
         except Exception as e:
             logger.fatal(
                 f"Could not create required path for emoji data at '{output_path!s}' \

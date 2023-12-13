@@ -113,9 +113,7 @@ def replace(content):
             content._content = pelimoji_prog.sub(pelimoji_replace, content._content)
         except TypeError:
             logger.warning(
-                "Something went wrong editing {} for pelimoji, sorry".format(
-                    str(content)
-                )
+                f"Something went wrong editing {content!s} for pelimoji, sorry"
             )
 
 

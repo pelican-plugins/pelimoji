@@ -21,6 +21,16 @@ def init(pelican_object):
         content_root, pelican_object.settings.get("PELIMOJI_SOURCE", "emoji")
     )
     output_path = Path(content_root, "emoji_map")
+    if not output_path.exists():
+        try:
+            output_path.mkdir(parents=True, exist_ok=True)
+        except NotADirectoryError as e:
+            logger.fatal(
+                f"Non-directory file exists at '{output_path!s}' \
+                 {e}"
+            )
+        except PermissionError as e:
+            logger.fatal(f"Unable to create '{output_path!s}', permission error {e}")
     pelican_object.settings["STATIC_PATHS"].append(str(output_path))
     pelimoji_ext = pelican_object.settings.get(
         "PELIMOJI_FILE_EXTENSIONS", ["md", "html", "rst"]
@@ -108,9 +118,7 @@ def replace(content):
             content._content = pelimoji_prog.sub(pelimoji_replace, content._content)
         except TypeError:
             logger.warning(
-                "Something went wrong editing {} for pelimoji, sorry".format(
-                    str(content)
-                )
+                f"Something went wrong editing {content!s} for pelimoji, sorry"
             )
 
 

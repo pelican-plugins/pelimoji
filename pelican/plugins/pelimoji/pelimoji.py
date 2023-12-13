@@ -31,7 +31,7 @@ def init(pelican_object):
         "PELIMOJI_FILE_EXTENSIONS", ["md", "html", "rst"]
     )
     prefix = pelican_object.settings.get("PELIMOJI_PREFIX", "")
-    output_map_path = output_path / "emoji.png"
+    output_map_path = "/emoji_map/emoji.png"
     if prefix:
         prefix = prefix + "-"
 
@@ -89,7 +89,7 @@ def init(pelican_object):
                 "height": image.size[1],
             }
         )
-    output_map.save(output_map_path)
+    output_map.save(output_path / "emoji.png")
     with open(Path(__file__).parent / "css.j2") as f:
         template = Template(f.read())
     with open(output_path / "emoji.css", "w") as f:

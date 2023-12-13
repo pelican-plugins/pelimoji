@@ -21,12 +21,17 @@ def init(pelican_object):
         content_root, pelican_object.settings.get("PELIMOJI_SOURCE", "emoji")
     )
     output_path = Path(content_root, "emoji_map")
+    if not output_path.exists():
+        try:
+            output_path.mkdir(parents=True)
+        except Exception as e:
+            logger.fatal(f"Could not create required path for emoji data at '{str(output_path)}': {e}")
     pelican_object.settings["STATIC_PATHS"].append(str(output_path))
     pelimoji_ext = pelican_object.settings.get(
         "PELIMOJI_FILE_EXTENSIONS", ["md", "html", "rst"]
     )
     prefix = pelican_object.settings.get("PELIMOJI_PREFIX", "")
-    output_map_path = "/emoji_map/emoji.png"
+    output_map_path = output_path / "emoji.png"
     if prefix:
         prefix = prefix + "-"
 
@@ -84,7 +89,7 @@ def init(pelican_object):
                 "height": image.size[1],
             }
         )
-    output_map.save(output_path / "emoji.png")
+    output_map.save(output_map_path)
     with open(Path(__file__).parent / "css.j2") as f:
         template = Template(f.read())
     with open(output_path / "emoji.css", "w") as f:

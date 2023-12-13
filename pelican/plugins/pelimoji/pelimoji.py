@@ -24,11 +24,13 @@ def init(pelican_object):
     if not output_path.exists():
         try:
             output_path.mkdir(parents=True, exist_ok=True)
-        except Exception as e:
+        except NotADirectoryError as e:
             logger.fatal(
-                f"Could not create required path for emoji data at '{output_path!s}' \
+                f"Non-directory file exists at '{output_path!s}' \
                  {e}"
             )
+        except PermissionError as e:
+            logger.fatal(f"Unable to create '{output_path!s}', permission error {e}")
     pelican_object.settings["STATIC_PATHS"].append(str(output_path))
     pelimoji_ext = pelican_object.settings.get(
         "PELIMOJI_FILE_EXTENSIONS", ["md", "html", "rst"]

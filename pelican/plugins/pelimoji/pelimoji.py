@@ -26,7 +26,8 @@ def init(pelican_object):
             output_path.mkdir(parents=True)
         except Exception as e:
             logger.fatal(
-                f"Could not create required path for emoji data at '{output_path!s}': {e}"
+                f"Could not create required path for emoji data at '{output_path!s}' \
+                 {e}"
             )
     pelican_object.settings["STATIC_PATHS"].append(str(output_path))
     pelimoji_ext = pelican_object.settings.get(

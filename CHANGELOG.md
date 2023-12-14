@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.0.1 - 2023-12-13
+1.1.0 - 2023-12-13
 ------------------
 
 Fix for path not existing on initial build

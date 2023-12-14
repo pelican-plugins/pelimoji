@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pelimoji"
-version = "1.1.0"
+version = "1.1.1"
 description = "Pelican plugin to add custom emoji to your site"
 authors = ["Kay Ohtie <kay@coyotesin.space>"]
 license = "AGPL-3.0"

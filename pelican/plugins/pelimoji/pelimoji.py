@@ -108,7 +108,7 @@ def init(pelican_object):
     # compile pattern to global for speed, given how massive it'll (potentially) be
     pelimoji_prog = re.compile(pattern)
     # And the pattern to replace it with!
-    pelimoji_replace = r'<i class="cemoji cemoji-\g<emoji>" aria-label="\g<emoji>" title="\g<emoji>"></i>'  # NOQA: E501
+    pelimoji_replace = r'<i class="pelimoji pelimoji-\g<emoji>" aria-label="\g<emoji>" title="\g<emoji>"></i>'  # NOQA: E501
 
 
 def replace(content):

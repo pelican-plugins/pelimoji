@@ -1,4 +1,4 @@
-i.cemoji {
+i.pelimoji {
     background-image: url('{{ output }}');
     background-size: {{ grid.width / images[0].width }}em;
     width: 1em;
@@ -8,7 +8,7 @@ i.cemoji {
     vertical-align: middle ! important;
 }
 {% for image in images %}
-.{{ prefix }}{{ image.stem }} {
+.pelimoji-{{ image.stem }} {
     background-position: -{{ image.position['x'] / image.width }}em {{ image.position['y'] / image.height }}em;
 }
 {% endfor %}

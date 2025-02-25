@@ -30,6 +30,11 @@ By default this plugin operates on source content files with the following file 
 PELIMOJI_FILE_EXTENSIONS = ["md", "html", "rst", "txt"]
 ```
 
+`PELIMOJI_SIZE_MULTIPLIER` can be specified to increase the size of all emojis when they are rendered
+```python
+PELIMOJI_SIZE_MULTIPLIER = 2
+```
+
 Contributing
 ------------
 

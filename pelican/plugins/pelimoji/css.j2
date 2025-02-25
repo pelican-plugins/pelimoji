@@ -1,14 +1,14 @@
 i.pelimoji {
     background-image: url('{{ output }}');
-    background-size: {{ grid.width / images[0].width }}em;
-    width: 1em;
-    height: 1em;
+    background-size: {{ (grid.width / images[0].width) * size_multiplier }}em;
+    width: {{ 1 * size_multiplier }}em;
+    height: {{1 * size_multiplier}}em;
     display: inline-block;
     object-fit: contain ! important;
     vertical-align: middle ! important;
 }
 {% for image in images %}
 .pelimoji-{{ image.stem }} {
-    background-position: -{{ image.position['x'] / image.width }}em {{ image.position['y'] / image.height }}em;
+    background-position: -{{ (image.position['x'] / image.width) * size_multiplier }}em {{ (image.position['y'] / image.height) * size_multiplier }}em;
 }
 {% endfor %}

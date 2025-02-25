@@ -20,6 +20,7 @@ def init(pelican_object):
     search_path = Path(
         content_root, pelican_object.settings.get("PELIMOJI_SOURCE", "emoji")
     )
+    size_multiplier = pelican_object.settings.get("PELIMOJI_SIZE_MULTIPLIER", 1)
     output_path = Path(content_root, "emoji_map")
     if not output_path.exists():
         try:
@@ -68,6 +69,7 @@ def init(pelican_object):
             "height": grid_size[1],
         },
         "output": output_map_path,
+        "size_multiplier": size_multiplier,
     }
     image: Image
     for position, image in enumerate(images):

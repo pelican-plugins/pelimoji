@@ -1,52 +1,62 @@
-[tool.poetry]
+[project]
 name = "pelimoji"
 version = "1.1.1"
 description = "Pelican plugin to add custom emoji to your site"
-authors = ["Kay Ohtie <kay@coyotesin.space>"]
-license = "AGPL-3.0"
+authors = [{name = "Kay Ohtie", email = "kay@coyotesin.space"}]
+license = {text = "AGPL-3.0"}
 readme = "README.md"
 keywords = ["pelican", "plugin", "emoji"]
-repository = "https://github.com/pelican-plugins/pelimoji"
-documentation = "https://docs.getpelican.com"
-packages = [
-    { include = "pelican" },
-]
-
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Framework :: Pelican",
     "Framework :: Pelican :: Plugins",
     "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
     "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+requires-python = "~=3.9"
+dependencies = [
+    "pelican>=4.5",
+    "Pillow>=9.5",
+]
 
-[tool.poetry.urls]
-"Funding" = "https://donate.getpelican.com/"
+[project.urls]
+"Homepage" = "https://github.com/pelican-plugins/pelimoji"
 "Issue Tracker" = "https://github.com/pelican-plugins/pelimoji/issues"
+"Changelog" = "https://github.com/pelican-plugins/pelimoji/blob/main/CHANGELOG.md"
+"Funding" = "https://donate.getpelican.com/"
 
-[tool.poetry.dependencies]
-python = ">=3.7,<4.0"
-pelican = ">=4.5"
-jinja2 = ">=3.1.2"
-Pillow = ">=9.5"
-markdown = {version = ">=3.2", optional = true}
+[project.optional-dependencies]
+markdown = ["markdown>=3.4"]
 
-[tool.poetry.group.dev.dependencies]
-black = "^23"
-invoke = "^2.1"
-markdown = "^3.4"
-ruff = ">=0.0.275"
+[dependency-groups]
+lint = [
+    "invoke>=2.2",
+    "ruff>=0.9.6,<1.0.0",
+]
 
-[tool.poetry.extras]
-markdown = ["markdown"]
+[tool.pdm.build]
+source-includes = [
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+]
+includes = ["pelican/"]
+excludes = ["**/.DS_Store", "tasks.py"]
 
 [tool.autopub]
 project-name = "Pelimoji"
 git-username = "botpub"
 git-email = "52496925+botpub@users.noreply.github.com"
+append-github-contributor = true
 
 [tool.ruff]
 select = [
@@ -75,11 +85,11 @@ ignore = [
   "PLW0603", # Using global statements
 ]
 
-target-version = "py38"
-
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-sort-within-sections = true
 known-first-party = ["pelican"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"

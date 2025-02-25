@@ -1,3 +1,4 @@
 __pycache__
 *.pyc
-poetry.lock
+.pdm-python
+pdm.lock

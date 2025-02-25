@@ -41,7 +41,7 @@ markdown = ["markdown>=3.4"]
 [dependency-groups]
 lint = [
     "invoke>=2.2",
-    "ruff>=0.9.6,<1.0.0",
+    "ruff>=0.9.7,<1.0.0",
 ]
 
 [tool.pdm.build]
@@ -58,7 +58,7 @@ git-username = "botpub"
 git-email = "52496925+botpub@users.noreply.github.com"
 append-github-contributor = true
 
-[tool.ruff]
+[tool.ruff.lint]
 select = [
   "B",   # flake8-bugbear
   "BLE", # flake8-blind-except
@@ -82,6 +82,7 @@ select = [
 
 ignore = [
   "C417",    # Unnecessary `map` usage
+  "ISC001",  # disabled so `ruff format` works without warning
   "PLW0603", # Using global statements
 ]
 

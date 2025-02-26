@@ -1,6 +1,6 @@
+from inspect import cleandoc
 import logging
 import os
-from inspect import cleandoc
 from pathlib import Path
 from shutil import which
 

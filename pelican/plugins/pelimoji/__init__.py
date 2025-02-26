@@ -1,1 +1,1 @@
-from .pelimoji import *  # NOQA
+from .pelimoji import *  # noqa: F403

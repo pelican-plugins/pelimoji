@@ -1,7 +1,9 @@
+"""Pelimoji plugin for Pelican."""
+
 import logging
-import re
 from os.path import abspath, dirname
 from pathlib import Path
+import re
 
 from jinja2 import Template
 from PIL import Image, ImageColor
@@ -13,6 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 def init(pelican_object):
+    """Initialize the plugin."""
     # Global variables for file extensions, emojis, prefix
     global pelimoji_ext, pelimoji_prog, pelimoji_replace
     # Let's build a list of installed emoji
@@ -114,6 +117,7 @@ def init(pelican_object):
 
 
 def replace(content):
+    """Replace emoji names with images."""
     fileext = str(content).split(".")[-1].lower()
     if fileext in pelimoji_ext:
         try:
@@ -125,5 +129,6 @@ def replace(content):
 
 
 def register():
+    """Register the plugin."""
     signals.initialized.connect(init)
     signals.content_object_init.connect(replace)

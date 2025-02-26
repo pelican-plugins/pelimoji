@@ -1,8 +1,9 @@
 # Pelimoji
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/pelican-plugins/pelimoji/main.yml?branch=main)](https://github.com/pelican-plugins/pelimoji/actions)
-[![PyPI Version](https://img.shields.io/pypi/v/pelican-markdown-include)](https://pypi.org/project/pelican-markdown-include/)
-![License](https://img.shields.io/pypi/l/pelican-markdown-include?color=blue)
+[![PyPI Version](https://img.shields.io/pypi/v/pelimoji)](https://pypi.org/project/pelimoji/)
+[![Downloads](https://img.shields.io/pypi/dm/pelimoji)](https://pypi.org/project/pelimoji/)
+![License](https://img.shields.io/pypi/l/pelimoji?color=blue)
 
 Pelimoji is a [Pelican][] plugin that adds support for custom emoji to your site.
 
@@ -45,3 +46,8 @@ To start contributing to this plugin, review the [Contributing to Pelican][] doc
 [Pelican]: https://getpelican.com
 [existing issues]: https://github.com/pelican-plugins/pelimoji/issues
 [Contributing to Pelican]: https://docs.getpelican.com/en/latest/contribute.html
+
+License
+-------
+
+This project is licensed under the AGPL-3.0 license.

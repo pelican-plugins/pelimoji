@@ -62,11 +62,14 @@ append-github-contributor = true
 select = [
   "B",   # flake8-bugbear
   "BLE", # flake8-blind-except
+  "C4",  # flake8-comprehensions
+  "D",   # pydocstyle
   "E",   # pycodestyle
   "F",   # pyflakes
   "I",   # isort
   "ICN", # flake8-import-conventions
   "ISC", # flake8-implicit-str-concat
+  "PGH", # pygrep-hooks
   "PL",  # pylint
   "RET", # flake8-return
   "RUF", # ruff-specific rules
@@ -81,7 +84,11 @@ select = [
 ]
 
 ignore = [
+  "D100",    # missing docstring in public module
+  "D104",    # missing docstring in public package
   "C417",    # Unnecessary `map` usage
+  "D203",    # blank line before class docstring
+  "D213",    # multi-line docstring summary should start at the second line
   "ISC001",  # disabled so `ruff format` works without warning
   "PLW0603", # Using global statements
 ]

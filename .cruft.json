@@ -1,0 +1,28 @@
+{
+  "template": "https://github.com/getpelican/cookiecutter-pelican-plugin",
+  "commit": "bf9529708de6eec566004cafd3684a9082ded997",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "plugin_name": "Pelimoji",
+      "repo_name": "pelimoji",
+      "package_name": "pelimoji",
+      "distribution_name": "pelimoji",
+      "version": "1.1.1",
+      "description": "Pelican plugin that adds support for custom emoji to your site.",
+      "authors": "{name = \"Kay Ohtie\", email = \"kay@coyotesin.space\"}",
+      "keywords": "\"pelican\", \"plugin\", \"emoji\"",
+      "readme": "README.md",
+      "contributing": "CONTRIBUTING.md",
+      "license": "GNU Affero General Public License v3|AGPL-3.0",
+      "repo_url": "https://github.com/pelican-plugins/pelimoji",
+      "dev_status": "5 - Production/Stable",
+      "tests_exist": false,
+      "python_version": "~=3.9",
+      "pelican_version": ">=4.5",
+      "_template": "https://github.com/getpelican/cookiecutter-pelican-plugin",
+      "_commit": "8d76f8a131f62fb06a285de1f142973c1ea7222a"
+    }
+  },
+  "directory": null
+}

@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.2.0 - 2025-03-01
+------------------
+
+Add size multiplier configuration setting to increase size of all emoji.
+
+Contributed by [Weston Boone](https://github.com/boonew2) via [PR #16](https://github.com/pelican-plugins/pelimoji/pull/16/)
+
+
 1.1.1 - 2023-12-14
 ------------------
 
